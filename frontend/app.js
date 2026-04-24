@@ -1,7 +1,7 @@
 const BASE_URL =
   window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
-    : 'https://your-app-name.onrender.com';
+    : 'https://sticky-notes-bbw6.onrender.com';
 
 const API_URL = `${BASE_URL}/api/notes`;
 const AUTH_URL = `${BASE_URL}/api/auth`;
