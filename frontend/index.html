@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Notes Board</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Auth Overlay -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-modal">
+            <h2><i class="fa-solid fa-note-sticky"></i> Sticky Notes</h2>
+            <div class="auth-tabs">
+                <button id="loginTabBtn" class="auth-tab active">Login</button>
+                <button id="registerTabBtn" class="auth-tab">Register</button>
+            </div>
+            <form id="authForm">
+                <div class="form-group hidden" id="purposeGroup">
+                    <label for="purposeInput">Purpose</label>
+                    <select id="purposeInput">
+                        <option value="" disabled selected>Select a purpose</option>
+                        <option value="Work">Work</option>
+                        <option value="Study">Study</option>
+                        <option value="Personal">Personal Organization</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="emailInput">Email</label>
+                    <input type="email" id="emailInput" required placeholder="Enter your email address">
+                </div>
+                <div class="form-group">
+                    <label for="passwordInput">Password</label>
+                    <input type="password" id="passwordInput" required placeholder="Enter your password">
+                </div>
+                <button type="submit" id="authSubmitBtn" class="btn primary-btn full-width">Login</button>
+                <div id="authError" class="auth-error hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" class="hidden">
+        <header class="header">
+            <div class="header-left">
+                <h1><i class="fa-solid fa-note-sticky"></i> Sticky Notes Board</h1>
+                <div class="boards-tabs">
+                    <button class="board-tab active" data-board="Main">Main</button>
+                    <button class="board-tab" data-board="Work">Work</button>
+                    <button class="board-tab" data-board="Personal">Personal</button>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="filter-controls">
+                    <select id="sortSelect" class="control-select">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                    </select>
+                    <select id="colorFilter" class="control-select">
+                        <option value="all">All Colors</option>
+                        <option value="#ffeb3b">Yellow</option>
+                        <option value="#81c784">Green</option>
+                        <option value="#64b5f6">Blue</option>
+                        <option value="#f06292">Pink</option>
+                        <option value="#ba68c8">Purple</option>
+                        <option value="#ffffff">White</option>
+                    </select>
+                </div>
+                <div class="search-container">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search...">
+                </div>
+                <button id="themeToggleBtn" class="btn secondary-btn" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button id="addNoteBtn" class="btn primary-btn"><i class="fa-solid fa-plus"></i></button>
+                <button id="logoutBtn" class="btn secondary-btn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </header>
+
+        <main class="board-container">
+        <!-- Pinned notes section -->
+        <div class="section-title hidden" id="pinnedTitle">Pinned</div>
+        <div class="notes-grid" id="pinnedNotesGrid"></div>
+        
+        <!-- Other notes section -->
+        <div class="section-title hidden" id="othersTitle">Others</div>
+        <div class="notes-grid" id="notesGrid"></div>
+    </main>
+
+    <!-- Modal for Add/Edit Note -->
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModalBtn">&times;</span>
+            <h2 id="modalTitle">Add New Note</h2>
+            <form id="noteForm">
+                <input type="hidden" id="noteId">
+                <div class="form-group">
+                    <label for="titleInput">Title</label>
+                    <input type="text" id="titleInput" required placeholder="Enter note title">
+                </div>
+                <div class="form-group">
+                    <label for="descInput">Description</label>
+                    <textarea id="descInput" rows="5" placeholder="Enter note description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="dueDateInput">Due Date</label>
+                    <input type="date" id="dueDateInput">
+                </div>
+                <div class="form-group">
+                    <label>Color</label>
+                    <div class="color-picker">
+                        <input type="radio" name="color" value="#ffeb3b" id="color1" checked>
+                        <label for="color1" class="color-option" style="background-color: #ffeb3b;"></label>
+                        
+                        <input type="radio" name="color" value="#81c784" id="color2">
+                        <label for="color2" class="color-option" style="background-color: #81c784;"></label>
+                        
+                        <input type="radio" name="color" value="#64b5f6" id="color3">
+                        <label for="color3" class="color-option" style="background-color: #64b5f6;"></label>
+                        
+                        <input type="radio" name="color" value="#f06292" id="color4">
+                        <label for="color4" class="color-option" style="background-color: #f06292;"></label>
+
+                        <input type="radio" name="color" value="#ba68c8" id="color5">
+                        <label for="color5" class="color-option" style="background-color: #ba68c8;"></label>
+                        
+                        <input type="radio" name="color" value="#ffffff" id="color6">
+                        <label for="color6" class="color-option" style="background-color: #ffffff; border: 1px solid #ccc;"></label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn save-btn">Save Note</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">Note saved successfully!</div>
+
+    <script src="app.js"></script>
+</body>
+</html>
