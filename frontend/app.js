@@ -1,10 +1,5 @@
-const BASE_URL =
-  window.location.hostname === 'localhost'
-    ? 'http://localhost:5000'
-    : 'https://sticky-notes-bbw6.onrender.com';
-
-const API_URL = `${BASE_URL}/api/notes`;
-const AUTH_URL = `${BASE_URL}/api/auth`;
+const API_URL = 'http://localhost:5000/api/notes';
+const AUTH_URL = 'http://localhost:5000/api/auth';
 
 // DOM Elements - Auth
 const authOverlay = document.getElementById('authOverlay');

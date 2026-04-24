@@ -5,6 +5,8 @@ const cors = require('cors');
 const path = require('path');
 const notesRoutes = require('./routes/notesRoutes');
 const authRoutes = require('./routes/authRoutes');
+const runDbFixes = require('./utils/dbFix');
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,9 +29,11 @@ app.use((req, res) => {
 
 // Database Connection
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
+  .then(async () => {
     console.log('Connected to MongoDB');
+    await runDbFixes();
     app.listen(PORT, () => {
+
       console.log(`Server is running on port ${PORT}`);
     });
   })
